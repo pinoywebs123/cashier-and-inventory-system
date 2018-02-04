@@ -21,11 +21,25 @@
 						<tr>
 							<td>Item Code</td>
 							<td>Name</td>
+							<td>Price</td>
 							<td>Quantity</td>
-							
+							<td>Sub Total</td>
 							<td>Transaction Date</td>
 						</tr>
 					</thead>
+					<tbody>
+						@foreach($items as $morls)
+							<tr>
+								<td>{{$morls->item_code}}</td>
+								<td>{{$morls->item($morls->item_code)->name}}</td>
+								<td>{{$morls->item($morls->item_code)->price}}</td>
+								<td>{{$morls->quantity}}</td>
+								<td>{{$morls->sub_total}}</td>
+								<td>{{$morls->created_at->toDayDateTimeString()}}</td>
+								
+								
+							</tr>
+						@endforeach
 				</table>
 			</div>
 			<div class="col-md-3 row">

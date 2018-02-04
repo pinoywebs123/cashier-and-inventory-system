@@ -16,6 +16,11 @@
 		<p class="text-center"><img src="{{URL::to('images/b1.png')}}"></p>
 		<div id="datacontent" class="row well">
 			<div class="col-md-9 row">
+				@if(Session::has('total_pay'))
+					<div class="alert alert-success">
+						{{Session::get('total_pay')}}
+					</div>
+				@endif
 				<table class="table table-bordered row">
 					<thead>
 						<tr>
@@ -26,7 +31,24 @@
 							<td>Sub Total</td>
 						</tr>
 					</thead>
+					<tbody>
+						@foreach($items as $morls)
+							<tr>
+								<td>{{$morls->item_code}}</td>
+								<td>{{$morls->item($morls->item_code)->name}}</td>
+								<td>{{$morls->quantity}}</td>
+								<td>{{$morls->item($morls->item_code)->price}}</td>
+								<td>{{$morls->sub_total}}</td>
+								
+							</tr>
+						@endforeach
+					</tbody>
 				</table>
+				<h3>Total: P{{$total}}</h3>
+
+				<div class="col-md-4 col-md-offset-4">
+					<a href="{{route('staff_total_payment')}}" class="btn btn-success btn-lg btn-block">SUBMIT</a>
+				</div>
 			</div>
 			<div class="col-md-3 row">
 				<ul class="nav nav-pills nav-stacked row text-center">

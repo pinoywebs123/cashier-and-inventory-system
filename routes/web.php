@@ -59,4 +59,29 @@ Route::group(['prefix'=> 'staff'], function(){
 		'as'=> 'staff_reports',
 		'uses'=> 'StaffController@staff_reports'
 	]);
+
+	Route::post('/new-inventory', [
+		'as'=> 'staff_new_inventory',
+		'uses'=> 'StaffController@staff_new_inventory'
+	]);
+
+	Route::get('/order/{item_id}', [
+		'as'=> 'staff_select_order',
+		'uses'=> 'StaffController@staff_select_order'
+	]);
+
+		Route::get('/delete-order/{order_id}', [
+			'as'=> 'staff_delete_order',
+			'uses'=> 'StaffController@staff_delete_order'
+		]);
+
+		Route::post('/order-to-pay/{order_id}', [
+			'as'=> 'staff_order_to_pay',
+			'uses'=> 'StaffController@staff_order_to_pay'
+		]);
+
+	Route::get('/total-payment', [
+		'as'=> 'staff_total_payment',
+		'uses'=> 'StaffController@staff_total_payment'
+	]);		
 });

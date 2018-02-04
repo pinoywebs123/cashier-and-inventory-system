@@ -15,6 +15,11 @@
 	<div class="row">
 		<p class="text-center"><img src="{{URL::to('images/b1.png')}}"></p>
 		<div id="datacontent" class="row well">
+			@if(Session::has('add_ok'))
+				<div class="alert alert-success">
+					{{Session::get('add_ok')}}	
+				</div>
+			@endif
 			<div class="col-md-9 row">
 				<a href="#" class="btn btn-danger btn-xs row" data-toggle="modal" data-target="#delivery">New Delivery</a>
 				<table class="table table-bordered row">
@@ -22,11 +27,25 @@
 						<tr>
 							<td>Item Code</td>
 							<td>Name</td>
-							<td>Quantity</td>
+							<td>Quantity Received</td>
+							<td>Quantity Remaining</td>
 							<td>Price</td>
 							<td>Date Delivered</td>
 						</tr>
+
 					</thead>
+					<tbody>
+						@foreach($items as $morls)
+							<tr>
+								<td>{{$morls->item_code}}</td>
+								<td>{{$morls->name}}</td>
+								<td>{{$morls->quantity}}</td>
+								<td>{{$morls->item($morls->item_code)->quantity}}</td>
+								<td>{{$morls->price}}</td>
+								<td>{{$morls->created_at->toDayDateTimeString()}}</td>
+							</tr>
+						@endforeach
+					</tbody>
 				</table>
 			</div>
 			<div class="col-md-3 row">
@@ -51,24 +70,25 @@
 					<h3 class="text-center">New Delivery Items</h3>
 				</div>
 				<div class="modal-body">
-					<form>
+					<form action="{{route('staff_new_inventory')}}" method="POST">
 						<div class="form-group">
 							<label>Item Code</label>
-							<input type="text" name="item_code" class="form-control">
+							<input type="text" name="item_code" class="form-control" required="" maxlength="20">
 						</div>
 						<div class="form-group">
 							<label>Item Name</label>
-							<input type="text" name="item_name" class="form-control">
+							<input type="text" name="item_name" class="form-control"  required="" maxlength="20">
 						</div>
 						<div class="form-group">
 							<label>Quantity</label>
-							<input type="number" name="item_quantity" class="form-control">
+							<input type="number" name="item_quantity" class="form-control"  required="" maxlength="20">
 						</div>
 						<div class="form-group">
 							<label>Price</label>
-							<input type="numer" name="item_price" class="form-control">
+							<input type="numer" name="item_price" class="form-control"  required="" maxlength="20">
 						</div>
 						<div class="form-group">
+							{{csrf_field()}}
 							<button type="submit" class="btn btn-primary">Submit</button>
 							<button type="button" class="btn btn-default">Clear</button>
 						</div>
